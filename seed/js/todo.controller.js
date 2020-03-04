@@ -1,30 +1,30 @@
-function TodoController(){
-    this.newTodo = '';
-    this.list = [{
-        title: '1 fadfad',
-        completed: false
-    }, {
-        title: '2fasdfa',
-        completed: false
-    }, {
-        title: '3fgfsf',
-        completed: false
-    }];
-    this.addTodo = function () {
-        this.list.unshift({
-            title: this.newTodo,
+function TodoController(TodoService){
+    var ctrl = this;
+    ctrl.newTodo = '';
+    ctrl.list = [];
+    function getTodos(){
+        TodoService
+            .retrieve()
+            .then(function (response) {
+                ctrl.list = response;
+            });
+    }
+    ctrl.addTodo = function () {
+        ctrl.list.unshift({
+            title: ctrl.newTodo,
             completed: false
         });
-        this.newTodo = '';
+        ctrl.newTodo = '';
     }
-    this.removeTodo = function (item, index){
-        this.list.splice(index, 1);
+    ctrl.removeTodo = function (item, index){
+        ctrl.list.splice(index, 1);
     }
-    this.getRemaining =  function (){
-        return this.list.filter(function(item){
+    ctrl.getRemaining =  function (){
+        return ctrl.list.filter(function(item){
             return !item.completed;
         });
-    }
+    };
+    getTodos();
 }
 
 angular
