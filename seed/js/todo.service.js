@@ -8,7 +8,11 @@ function TodoService($http){
             return response.data.splice(0,10);
         });
     }
-    function update(){}
+    function update(todo){
+        return $http.put(API + todo.id).then(function(response){
+            return response.data;
+        });
+    }
     function remove(){}
 
     return {
